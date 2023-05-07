@@ -19,11 +19,6 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-
-Route::get('/data', function () {
-    return App\Models\V::where('proveedor', 'like', 'S%')->get();
-});
-
 Route::get('/', [PageController::class, 'index'])->name('home');
 
 Route::get('/login', [App\Http\Controllers\HomeController::class, 'index'])->name('login');
@@ -55,3 +50,5 @@ Route::post('/proponer', [CursoController::class, 'post_course'])->name('propone
 Route::get('/perfil', [PageController::class, 'profile'])->name('profile');
 
 Route::post('/perfil', [PageController::class, 'update_profile'])->name('profile');
+
+Route::get('/membresía', [PageController::class, 'membership'])->name('membership');

@@ -180,6 +180,34 @@
 
                             </div>
 
+                            {{-- Grado de estudios --}}
+                            @php
+                            # descending order
+                                $grados = \App\Models\Grado_Escolar::all()->sortBy('cve_grado_escolar');
+                            @endphp
+                            <div class="row mb-3">
+                                <label for="cve_grado_escolar"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Grado escolar') }}</label>
+
+                                <div class="col-md-6">
+                                    <select name="cve_grado_escolar" id="cve_grado_escolar"
+                                        class="form-control @error('cve_grado_escolar') is-invalid @enderror">
+                                        <option value="">Selecciona una opción</option>
+                                        @foreach ($grados as $grado)
+                                            <option value="{{ $grado->cve_grado_escolar }}">{{ $grado->grado }}</option>
+                                        @endforeach
+
+                                    </select>
+
+                                    @error('cve_grado_escolar')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                            </div>
+
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-success">

@@ -7,7 +7,7 @@
         <div class="card-body">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" v-model="newItem" @keyup.enter="addItem">
-                <div class="input-group-append">
+                <div class="input-group-append mx-2">
                     <button class="btn btn-outline-secondary" type="button" @click="addItem">Add</button>
                 </div>
             </div>

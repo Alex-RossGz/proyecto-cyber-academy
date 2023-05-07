@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Membresia;
+
 
 class User extends Authenticatable
 {
@@ -42,4 +44,32 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function persona()
+    {
+        return $this->belongsTo(Persona::class, 'cve_persona', 'cve_persona');
+    }
+
+    public function profesor()
+    {
+        return $this->hasOne(Profesor::class, 'cve_usuario', 'id');
+    }
+
+    public function alumno()
+    {
+        return $this->hasOne(Alumno::class, 'cve_usuario', 'id');
+    }
+
+    protected $appends = ['membership'];
+
+    public function getMembershipAttribute()
+    {
+        $membresia = Membership::where('cve_alumno', $this->alumno->cve_alumno)->first();
+        if (!$membresia) {
+            return null;
+        }
+        $tipoMembresia = TipoMembresia::where('cve_tipo_membresia', $membresia->cve_tipo_membresia)->first();
+
+        return $tipoMembresia->tipo_membresia;
+    }
 }

@@ -4,18 +4,18 @@
 
 @section('content')
     <div class="container">
-       <div class="bg-primary text-white mb-5 pb-1 pt-3 px-3">
-        {{-- Breadcrum --}}
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="link-light" href="{{ route('home') }}">Home</a></li>
-                <li class="breadcrumb-item">Curso</li>
-            </ol>
-        </nav>
-        <h2 class="fst-italic">
-            Resultados de la búsqueda
-        </h2>
-    </div>
+        <div class="bg-primary text-white mb-5 pb-1 pt-3 px-3">
+            {{-- Breadcrum --}}
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="link-light" href="{{ route('home') }}">Home</a></li>
+                    <li class="breadcrumb-item">Curso</li>
+                </ol>
+            </nav>
+            <h2 class="fst-italic">
+                Resultados de la búsqueda
+            </h2>
+        </div>
 
         {{-- Form to search --}}
         <div class="row">
@@ -45,6 +45,7 @@
                                         <th scope="col">Temas</th>
                                         <th scope="col">Suscrito</th>
                                         <th scope="col">Profesor</th>
+                                        <th scope="col">Premium</th>
                                         <th scope="col">Acciones</th>
                                     </tr>
                                 </thead>
@@ -62,7 +63,18 @@
                                                     <i class="fas fa-times text-danger"></i>
                                                 </td>
                                             @endif
-                                            <td>{{ $course->author }}</td>
+                                            <td class="text-capitalize">
+                                                <a href="#" class="link-dark">
+                                                    {{ '@' . $course->author_full_name }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                @if ($course->premium)
+                                                    <i class="fas fa-bolt text-info"></i>
+                                                @else
+                                                    <i class="fas fa-star text-warning"></i>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <a href=" {{ route('ver-curso', [$course->id => str_replace(' ', '_', $course->title)]) }} "
                                                     class="btn btn-outline-success">Ver más</a>

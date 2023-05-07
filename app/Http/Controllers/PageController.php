@@ -92,4 +92,12 @@ class PageController extends Controller
 
         return 'test';
     }
+
+    public function membership()
+    {
+        if (Auth::guest()) {
+            return redirect()->route('login');
+        }
+        return view('content.membresía');
+    }
 }

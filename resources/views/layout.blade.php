@@ -64,17 +64,22 @@
                             <div class="dropdown-menu">
                                 @auth
                                     <h6 class="dropdown-header">Perfil de alumno</h6>
-                                    <a class="dropdown-item" href="{{route('subscribed')}}">Mis cursos inscritos</a>
+                                    <a class="dropdown-item" href="{{ route('subscribed') }}">Mis cursos inscritos</a>
                                     <a class="dropdown-item disabled" href="#">Mi suscripción
                                         <i>(Próximamente...)</i></a>
+
+                                    <a href="{{ route('membership') }}" class="dropdown-item">
+                                        <i class="fas fa-certificate"></i>
+                                        Membresías</a>
                                     <hr class="dropdown-divider">
                                     <h6 class="dropdown-header">Perfil de profesor</h6>
                                     <a class="dropdown-item disabled" href="#">Mis cursos <i>(Próximamente...)
                                         </i></a>
-                                    <a class="dropdown-item" href="{{route('proponer')}}"><i class="fa fa-upload" aria-hidden="true"></i> Proponer curso</a>
+                                    <a class="dropdown-item" href="{{ route('proponer') }}"><i class="fa fa-upload"
+                                            aria-hidden="true"></i> Proponer curso</a>
                                     <hr class="dropdown-divider">
                                     <h6 class="dropdown-header">Perfil de usuario</h6>
-                                    <a class="dropdown-item" href= "{{ route('profile') }}">Mi perfil</a>
+                                    <a class="dropdown-item" href="{{ route('profile') }}">Mi perfil</a>
                                     <form id="logout-form" action="{{ url('logout') }}" method="POST">
                                         {{ csrf_field() }}
                                         <button type="submit" class="dropdown-item">Salir</button>
@@ -85,6 +90,7 @@
                                     <a class="dropdown-item" href="{{ route('register') }}">Registrarse</a>
                                 @endguest
                             </div>
+                        </li>
 
                     </ul>
                     {{-- Buscar curso: abajo mostrará los cursos que coincidan con la búsqueda Searchabla Curs --}}
@@ -94,6 +100,12 @@
                             name="course">
                         <button class="btn btn-outline-success" type="submit">Buscar</button>
                     </form>
+
+                    @auth
+                        <div class="mt-3">
+                            <a href="{{ route('course') }}" class="btn btn-primary">Ver todos los cursos</a>
+                        </div>
+                    @endauth
 
                 </div>
             </div>

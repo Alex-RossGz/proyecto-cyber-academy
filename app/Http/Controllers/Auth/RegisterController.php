@@ -60,6 +60,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'genero' => ['nullable', 'string', 'max:255'],
+            'cve_grado_escolar' => ['required', 'integer'],
         ]);
     }
 
@@ -93,6 +94,18 @@ class RegisterController extends Controller
             ]);
 
             $user->save();
+
+            $profesor = new \App\Models\Profesor([
+                'cve_usuario' => $user->id,
+            ]);
+
+            $profesor->save();
+
+            $alumno = new \App\Models\Alumno([
+                'cve_usuario' => $user->id,
+                'cve_grado_escolar' => $data['cve_grado_escolar'], // Assuming you have 'cve_grado_escolar' field in the form
+            ]);
+            $alumno->save();
 
             return $user;
         });

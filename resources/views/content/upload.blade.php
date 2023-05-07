@@ -3,7 +3,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" id="form">
+    <div class="container" id="address">
         <div class="row align-items-center justify-content-center">
             <div class="card col-md-8 col-md-offset-2">
                 <div class="panel panel-default">

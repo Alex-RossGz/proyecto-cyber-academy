@@ -7,18 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
 class Curso extends Model
-{   
+{
     use HasFactory, Searchable;
 
     protected $table = 'curso';
     protected $primaryKey = 'cve_curso';
 
-    public function toSearchableArray()
-    {
-        $array = [
-            'nombre' => $this->nombre,
-        ];
+    protected $fillable = [
+        'cve_curso',
+        'nombre',
+        'cant_materia',
+        'duracion',
+        'cve_profesor',
+    ];
 
-        return $array;
+    // Add the relationship with the Profesor model
+    public function profesor()
+    {
+        return $this->belongsTo(Profesor::class, 'cve_profesor');
+    }
+
+    public function cursoMongo()
+    {
+        return $this->hasOne(CourseMongo::class, 'cve_curso');
     }
 }

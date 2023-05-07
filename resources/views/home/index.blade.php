@@ -1,3 +1,6 @@
+@php
+    $core_user = Auth::user();
+@endphp
 @extends('layout')
 
 @section('content')
@@ -11,7 +14,18 @@
             <small class="text-muted">Invitado</small>
         @endguest
         @auth
-            <small class="text-muted">{{ $user->nombre }} {{ $user->apellido_paterno }} {{ $user->apellido_materno }}</small>
+            <small class="text-muted">
+                <i class="fa fa-user" aria-hidden="true"></i> {{ $user->nombre }} {{ $user->apellido_paterno }}
+                {{ $user->apellido_materno }}
+            </small>
+            {{-- membership --}}
+            @if ($core_user->membership == 'premium')
+                <span class="badge bg-info text-white">Premium</span>
+            @elseif ($core_user->membership == 'basica')
+                <span class="badge bg-primary text-white">Básica</span>
+            @else
+                <span class="badge bg-secondary text-white">Sin membresía</span>
+            @endif
         @endauth
         <div id="carouselExampleCaptions" class="carousel slide p-2 mb-3" data-bs-ride="false">
             <div class="carousel-indicators">
@@ -80,10 +94,10 @@
                 <div class="card h-100">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center">
 
-                            <h5 class="card-title text-center">Ver más...</h5>
-                            <p class="card-text text-center">
-                                <a href="{{ route('course') }}" class="btn btn-primary">Ver todos los cursos</a>
-                            </p>
+                        <h5 class="card-title text-center">Ver más...</h5>
+                        <p class="card-text text-center">
+                            <a href="{{ route('course') }}" class="btn btn-primary">Ver todos los cursos</a>
+                        </p>
                     </div>
                 </div>
             </div>
