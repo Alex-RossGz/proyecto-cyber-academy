@@ -45,21 +45,26 @@ class CursoController extends Controller
                 return view('content.expo.texto', compact('course', 'tema'));
             default:
                 return abort(404);
+            }
         }
-    }
 
     # función para suscribirse a un curso
     public function subscribe(Request $request)
     {
+        $course = $request->input('course');
+        $crs = CourseMongo::where('_id', $course)->first();
         if (Auth::guest()) {
             return redirect()->route('login');
         }
+        else if (is_null(Auth::user()->membership)) {
+            return redirect()->route('membership');
+        }
+        else if (Auth::user()->membership != 'premium' && $crs->premium) {
+            return redirect()->route('membership');
+        }
         # else if user has membership basic or premium
 
-        $course = $request->input('course');
         $user = auth()->user()->id;
-
-        $crs = CourseMongo::where('_id', $course)->first();
 
         DB::transaction(function () use ($course, $user) {
             $course = CourseMongo::where('_id', $course)->first();

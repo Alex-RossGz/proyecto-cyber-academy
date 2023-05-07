@@ -51,9 +51,9 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($courses as $course)
-                                        <tr>
-                                            <td>{{ $course->title }}</td>
-                                            <td>{{ $course->temas }}</td>
+                                        <tr class="{{ $course->premium ? 'bg-dark text-white' : '' }}">
+                                            <td class="{{ $course->premium ? 'text-white' : ''}}">{{ $course->title }}</td>
+                                            <td class="{{ $course->premium ? 'text-white' : ''}}">{{ $course->temas }}</td>
                                             @if ($course->subscribed)
                                                 <td>
                                                     <i class="fas fa-check text-success"></i>
@@ -64,7 +64,7 @@
                                                 </td>
                                             @endif
                                             <td class="text-capitalize">
-                                                <a href="#" class="link-dark">
+                                                <a href="#" class="{{ $course->premium ? 'text-white' : 'link-dark'}}">
                                                     {{ '@' . $course->author_full_name }}
                                                 </a>
                                             </td>
@@ -77,7 +77,8 @@
                                             </td>
                                             <td>
                                                 <a href=" {{ route('ver-curso', [$course->id => str_replace(' ', '_', $course->title)]) }} "
-                                                    class="btn btn-outline-success">Ver más</a>
+                                                    class="btn {{ $course->premium ? 'btn-info' : 'btn-primary text-white'}}
+                                                    ">Ver más</a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -16,17 +16,17 @@ import { createApp } from 'vue';
 const app = createApp({});
 const form = createApp({});
 
-import ExampleComponent from './components/ExampleComponent.vue';
 import cards from './components/cards.vue';
 
 import temario from './components/temario.vue';
 import address from './components/Address.vue';
+import PaymentOptions from './components/PaymentOptions.vue';
 
-app.component('example-component', ExampleComponent);
 app.component('cards', cards);
 
 form.component('temario', temario);
 form.component('vaddress' , address);
+form.component('payment-options', PaymentOptions);
 
 /**
  * The following block of code may be used to automatically register your

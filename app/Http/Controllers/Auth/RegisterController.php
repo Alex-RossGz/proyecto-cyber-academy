@@ -107,6 +107,14 @@ class RegisterController extends Controller
             ]);
             $alumno->save();
 
+            $correo = new \App\Models\Correo([
+                'cve_persona' => $persona->cve_persona,
+                'correo' => $data['email'],
+                'dominio' => preg_replace('/.*@/', '', $data['email']),
+            ]);
+            $correo->save();
+
+
             return $user;
         });
     }

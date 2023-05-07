@@ -6,7 +6,7 @@
 @section('content')
     <div class="container-fluid">
         <h1 class="display-1">
-            <b>Bienvenido a </b><img src="{{ asset('img/logo.png') }}" alt="Logo" class="img-fluid"
+            <b>Bienvenido a </b><img src="{{ asset(($core_user->membership !== 'premium') ? 'img/logo.png' : 'img/logo-premium.png') }}" alt="Logo" class="img-fluid"
                 style="max-height: 100px;">{{ config('app.name') }}
 
         </h1>

@@ -18,6 +18,20 @@
                 onclick="/* remove text-truncate to show all text */ this.classList.toggle('text-truncate')">
                 {{ $course->description ?? 'Descripción del curso' }}
             </p>
+            {{-- Verificado --}}
+            @if($course->available)
+            <footer class="blockquote-footer text-primary mt-3">
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                <cite title="Verificado">Verificado</cite>
+            </footer>
+            @else
+            <footer class="blockquote-footer text-danger mt-3">
+                <small>
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    <cite title="Verificado">En revisión (el curso no ha sido verificado)</cite>
+                </small>
+            </footer>
+            @endif
         </div>
         {{-- botón para continuar --}}
         <div class="card-footer justify-content-center">
@@ -30,7 +44,7 @@
                     Ir al curso
                 </a>
             @else
-                <a class="d-block btn btn-outline-secondary"
+                <a class="d-block btn {{ $course->premium ? 'btn-info' : 'btn-secondary' }}"
                     href="{{ route('ver-curso', [$id => str_replace(' ', '_', $course->title)]) }}">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     Inscribirme al curso

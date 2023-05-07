@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ciudad;
+use App\Models\Pais;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,13 +32,13 @@ class HomeController extends Controller
 
     public function getCountries()
     {
-        $countries = DB::table('pais')->get();
+        $countries = Pais::all();
         return response()->json($countries);
     }
 
     public function getCities(Request $request)
     {
-        $cities = DB::table('ciudad')->where('cve_pais', $request->id)->get();
+        $cities = Ciudad::where('cve_pais', $request->id)->get();
         return response()->json($cities);
     }
 }

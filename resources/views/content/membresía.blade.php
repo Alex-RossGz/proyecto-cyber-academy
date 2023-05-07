@@ -47,7 +47,9 @@
                                 <li>Opción de actualizar a membresía premium</li>
                             </ul>
                             @if ($user->membership == null)
-                                <button type="button" class="btn btn-lg btn-block btn-primary rounded-pill text-white">Regístrate</button>
+                                <form action="{{ route('payment', ['membership' => 'basica']) }}" method="get">
+                                    <button class="btn btn-lg btn-block btn-primary rounded-pill text-white">Regístrate</button>
+                                </form>
                             @endif
                         </div>
                     </div>
@@ -72,7 +74,9 @@
                                 <li>Acceso exclusivo a contenido premium</li>
                             </ul>
                             @if ($user->membership == null || $user->membership == 'basica')
-                                    <button type="button" class="btn btn-lg btn-block btn-info rounded-pill">Regístrate</button>
+                                <form action="{{ route('payment', ['membership' => 'premium']) }}" method="get">
+                                    <button class="btn btn-lg btn-block btn-info rounded-pill text-white">Regístrate</button>
+                                </form>
                             @endif
                         </div>
                     </div>

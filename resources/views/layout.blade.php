@@ -22,20 +22,24 @@
 @endphp
 
 <body class="antialiased">
-    <nav class="navbar bg-light fixed-top">
+    <nav class="navbar fixed-top {{ Auth::user()->membership == 'premium' ? 'navbar-dark bg-dark' : 'navbar-light bg-light' }} shadow-sm">
         <div class="container-fluid">
             <a class="navbar-brand {{ $disabled }}" href="{{ route('home') }}">
                 <img src="{{ asset('favicon.png') }}" alt="" width="30" height="24"
                     class="d-inline-block align-text-top">
                 {{ config('app.name', 'Laravel') }}
             </a>
+            {{-- premium badge --}}
+            @if (Auth::user()->membership == 'premium')
+                <span class="badge bg-info text-dark">Premium</span>
+            @endif
 
 
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+            <div class="offcanvas offcanvas-end {{ Auth::user()->membership == 'premium' ? 'bg-info' : 'bg-light' }}" tabindex="-1" id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
                     <div id="logo" class="text-center">

@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <div class="bg-primary text-white mb-5 pb-1 pt-3 px-3">
+    <div class="{{$course->premium ? 'bg-info' : 'bg-primary'}} text-white mb-5 pb-1 pt-3 px-3">
         {{-- Breadcrum --}}
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -35,7 +35,7 @@
             </p>
             @endunless
             <table class="table table-hover mt-5">
-                <thead class="bg-primary text-white">
+                <thead class="{{$course->premium ? 'bg-info' : 'bg-primary'}} text-white">
                     <tr>
                         <th class="text-center">#</th>
                         <th>Temario</th>

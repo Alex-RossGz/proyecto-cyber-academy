@@ -60,7 +60,7 @@ class User extends Authenticatable
         return $this->hasOne(Alumno::class, 'cve_usuario', 'id');
     }
 
-    protected $appends = ['membership'];
+    protected $appends = ['membership', 'membership_id'];
 
     public function getMembershipAttribute()
     {
@@ -71,5 +71,14 @@ class User extends Authenticatable
         $tipoMembresia = TipoMembresia::where('cve_tipo_membresia', $membresia->cve_tipo_membresia)->first();
 
         return $tipoMembresia->tipo_membresia;
+    }
+
+    public function getMembershipIdAttribute()
+    {
+        $membresia = Membership::where('cve_alumno', $this->alumno->cve_alumno)->first();
+        if (!$membresia) {
+            return null;
+        }
+        return $membresia->cve_membresia;
     }
 }

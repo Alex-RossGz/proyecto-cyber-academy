@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CursoController;
 
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PageController;
 use App\Models\CourseMongo;
 use App\Models\Curso;
@@ -52,3 +53,9 @@ Route::get('/perfil', [PageController::class, 'profile'])->name('profile');
 Route::post('/perfil', [PageController::class, 'update_profile'])->name('profile');
 
 Route::get('/membresía', [PageController::class, 'membership'])->name('membership');
+
+Route::get('/pago/{membership}', [PageController::class, 'payment'])->name('payment');
+
+Route::get('/pago/{membership}/{payment_method}', [PageController::class, 'proceed_payment'])->name('proceed');
+
+Route::put('/pago/{membership}/{payment_method}', [MembershipController::class, 'update_membership'])->name('update_membership');
