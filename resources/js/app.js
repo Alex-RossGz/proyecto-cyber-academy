@@ -20,7 +20,7 @@ import ExampleComponent from './components/ExampleComponent.vue';
 import cards from './components/cards.vue';
 
 import temario from './components/temario.vue';
-import address from './components/address.vue';
+import address from './components/Address.vue';
 
 app.component('example-component', ExampleComponent);
 app.component('cards', cards);

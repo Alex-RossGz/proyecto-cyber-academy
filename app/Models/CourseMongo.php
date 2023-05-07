@@ -9,6 +9,16 @@ class CourseMongo extends Model
 
     protected $connection = 'mongodb';
     protected $collection = 'media';
+    protected $fillable = [
+        'id',
+        'title',
+        'description',
+        'temario',
+        'author',
+        'version',
+        'subscribers',
+        'available',
+    ];
 
     # index
     public function show($id)

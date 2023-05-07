@@ -9,29 +9,44 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Termwind\Components\Dd;
+use App\Models\Direccion;
+use App\Models\Ciudad;
+use App\Models\Pais;
+use App\Models\Persona;
 
 class PageController extends Controller
 {
+    # const max_courses = 3;
+    private int $max_courses = 3;
 
     public function index()
     {
-
         //dd(asset('curso/curso1.jpg'));
         $id = Auth::check() ? Auth::user()->id : 0;
+
         # pick 3 random numbers in courses range
-        $courses = CourseMongo::all()->shuffle()->random(3);
+        $many_courses = CourseMongo::all()->count() > $this->max_courses;
+        $courses = $many_courses
+            ? CourseMongo::all()
+                ->shuffle()
+                ->random(3)
+            : CourseMongo::all();
 
         foreach ($courses as $course) {
             # check if course is version 2, if so, fetch the nombre from table persona where cve_persona = author
             if (($course->version ?? 1) == 2) {
-                $author = DB::table('persona')->where('cve_persona',User::where('id', $course->author)->first()->cve_persona)->first();
+                $author = DB::table('persona')
+                    ->where('cve_persona', User::where('id', $course->author)->first()->cve_persona)
+                    ->first();
 
                 $author = $author->nombre . ' ' . $author->apellido_paterno . ' ' . $author->apellido_materno;
                 $course->author = $author;
             }
         }
 
-        $user = DB::table('persona')->where('cve_persona', User::find($id)->cve_persona ?? 0)->first();
+        $user = DB::table('persona')
+            ->where('cve_persona', User::find($id)->cve_persona ?? 0)
+            ->first();
         $data = compact('courses', 'id', 'user');
 
         return view('home.index', $data);
@@ -40,37 +55,29 @@ class PageController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        # get the person who owns the user (cve_persona = $user->id) no need to join
-        $user = DB::table('persona')
-            ->join('users', 'users.cve_persona', '=', 'persona.cve_persona')
-            ->where('users.id', $user->id)
-            ->get()->first();
 
-        $address = [];
-        $get_address = DB::table('direccion')
-            ->where('cve_direccion', $user->cve_direccion)
-            ->get()->first();
+        // Get the person who owns the user (cve_persona = $user->id) no need to join
+        $persona = Persona::where('cve_persona', $user->cve_persona)->first();
 
-        // fill with codigo_postal, numero, direccion
-        $address['codigo_postal'] = $get_address->codigo_postal;
-        $address['numero'] = $get_address->numero;
-        $address['direccion'] = $get_address->direccion;
+        // Get address, city, and country using Eloquent relationships
+        $direccion = Direccion::find($persona->cve_direccion);
+        $ciudad = Ciudad::find($direccion->cve_ciudad);
+        $pais = Pais::find($ciudad->cve_pais);
 
+        // Fill address with the required details
+        $address = [
+            'codigo_postal' => $direccion->codigo_postal,
+            'numero' => $direccion->numero,
+            'direccion' => $direccion->direccion,
+            'ciudad' => $ciudad->ciudad,
+            'pais' => $pais->pais,
+        ];
 
-        $get_city = DB::table('ciudad')
-        ->where('cve_ciudad', $get_address->cve_ciudad)
-        ->get()->first();
+        # merge user and person data
+        $core_user = $user;
+        $user = $persona;
 
-        $address['ciudad'] = $get_city->ciudad;
-
-        $get_country = DB::table('pais')
-            ->where('cve_pais', $get_city->cve_pais)
-            ->get()->first();
-
-        $address['pais'] = $get_country->pais;
-
-        $data = compact('user', 'address');
-
+        $data = compact('user', 'address', 'core_user');
 
         return view('profile', $data);
     }
@@ -79,11 +86,10 @@ class PageController extends Controller
     {
         # in request if an input is empty, don't update it
         /* Request:
-
          */
 
-         dd($request->all());
+        dd($request->all());
 
-         return "test";
+        return 'test';
     }
 }

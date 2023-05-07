@@ -137,10 +137,10 @@
                                     </p>
                                     <ul class="list-group">
                                         <li class="list-group-item">
-                                            <strong>Correo electrónico:</strong> {{ $user->email }}
+                                            <strong>Correo electrónico:</strong> {{ $core_user->email }}
                                         </li>
                                         <li class="list-group-item">
-                                            <strong>Username:</strong> {{ $user->name }}
+                                            <strong>Username:</strong> {{ $core_user->name }}
                                         </li>
                                         <li class="list-group-item">
                                             <a href="{{ route('password.request') }}" class="btn btn-link">

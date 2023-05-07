@@ -84,7 +84,7 @@ class CursoController extends Controller
 
         # dd($courses);
 
-        return  view('content.suscritos', compact('courses'));
+        return view('content.suscritos', compact('courses'));
     }
 
     public function proponer()
@@ -94,28 +94,33 @@ class CursoController extends Controller
 
     public function post_course(Request $request)
     {
-        $temas = [];
-        # split by comma
-        foreach (explode(',', $request->input('temario')) as $tema)
-            $temas[] = $tema;
-        $should_id = CourseMongo::orderBy('id', 'desc')->first()->id + 1;
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'temario' => 'required|string',
+            'image' => 'required|image',
+        ]);
 
+        $temas = explode(',', $request->input('temario'));
 
-        $course = new CourseMongo();
-        $course->id = $should_id;
-        $course->title = $request->input('title');
-        $course->description = $request->input('description');
-        $course->temario = $temas;
-        $course->author = auth()->user()->id;
-        $course->version = 2;
-        $course->subscribers = [];
-        $course->available = false;
+        $should_id = CourseMongo::orderBy('id', 'desc')->first()->id + 1 ?? 1;
+
+        $course = new CourseMongo([
+            'id' => $should_id,
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'temario' => $temas,
+            'author' => auth()->user()->id,
+            'version' => 2,
+            'subscribers' => [],
+            'available' => false,
+        ]);
+
         $course->save();
-        #compress image
 
-
-        # get the id of the max course
-        $request->image->move(public_path('curso'), "curso$should_id.jpg");
+        // Save the image in the public/curso folder with a unique file name
+        $imageName = "curso{$should_id}." . $request->image->extension();
+        $request->image->move(public_path('curso'), $imageName);
 
         return redirect()->route('home');
     }

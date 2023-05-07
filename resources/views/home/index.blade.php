@@ -78,11 +78,12 @@
             {{-- Ver más... --}}
             <div class="col">
                 <div class="card h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title text-center">Ver más...</h5>
-                        <p class="card-text text-center">
-                            <a href="{{ route('course') }}" class="btn btn-primary">Ver todos los cursos</a>
-                        </p>
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+
+                            <h5 class="card-title text-center">Ver más...</h5>
+                            <p class="card-text text-center">
+                                <a href="{{ route('course') }}" class="btn btn-primary">Ver todos los cursos</a>
+                            </p>
                     </div>
                 </div>
             </div>

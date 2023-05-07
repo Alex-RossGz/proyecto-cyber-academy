@@ -13,9 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('helpers', function () {
+            require_once app_path('Helpers/helpers.php');
+        });
     }
-
+    
     /**
      * Bootstrap any application services.
      *

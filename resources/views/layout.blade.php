@@ -221,8 +221,7 @@
 
         <!-- Copyright -->
         <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
-            © 2022 Copyright:
-            <a class="text-reset fw-bold">CyberAcademy</a>
+            © {{ date('Y') }} <a class="text-reset fw-bold">{{ config('app.name', 'Laravel') }}</a>
         </div>
         <!-- Copyright -->
     </footer>

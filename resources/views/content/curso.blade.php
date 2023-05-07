@@ -99,7 +99,7 @@
 
         <aside class="col-6 pl-3">
             <div
-                style="background-image: url({{ asset("curso/curso$course->id.jpg") }});
+                style="background-image: url({{ get_course_image_path($course->id) }});
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;

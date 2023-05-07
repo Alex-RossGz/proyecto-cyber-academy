@@ -66,31 +66,36 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(array $data): User
     {
-        # create table returning the id
-        DB::table('persona')->insert([
-            'nombre' => $data['name'],
-            'apellido_paterno' => $data['lastname'],
-            'apellido_materno' => $data['lastname2'],
-            'genero' => $data['genero'],
-            'fecha_nacimiento' => $data['birthdate'],
-            'cve_direccion' => 1,
-        ]);
+        return DB::transaction(function () use ($data) {
+            // Create a new 'persona' record and return the instance
+            $persona = new \App\Models\Persona([
+                'nombre' => $data['name'],
+                'apellido_paterno' => $data['lastname'],
+                'apellido_materno' => $data['lastname2'],
+                'genero' => $data['genero'],
+                'fecha_nacimiento' => $data['birthdate'],
+                'cve_direccion' => 1,
+            ]);
 
-        # get the id of the last inserted row
-        $id = DB::table('persona')->latest('cve_persona')->first()->cve_persona;
+            $persona->save();
 
-        dd($id);
+            // Create a new user record and return the instance
+            $user = new User([
+                'name' => $data['username'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'cve_persona' => $persona->cve_persona,
+            ]);
 
-        return User::create([
-            'name' => $data['username'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'cve_persona' => $id,
-        ]);
+            $user->save();
+
+            return $user;
+        });
     }
+
 }

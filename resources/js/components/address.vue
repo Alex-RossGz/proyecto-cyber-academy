@@ -20,7 +20,7 @@ PAIS(cve_pais, pais) -> CIUDAD (cve_ciudad, ciudad, cve_pais) -> DIRECCION (cve_
 
                 <div class="form-text">
                     <!-- if is set the property address -->
-                    <span class="text-secondary">
+                    <span class="text-secondary" v-if="old.pais">
                         Anterior: {{ old.pais }}
                     </span>
                 </div>
@@ -37,7 +37,7 @@ PAIS(cve_pais, pais) -> CIUDAD (cve_ciudad, ciudad, cve_pais) -> DIRECCION (cve_
 
                 <div class="form-text">
                     <!-- if is set the property address -->
-                    <span class="text-secondary">
+                    <span class="text-secondary" v-if="old.ciudad">
                         Anterior: {{ old.ciudad }}
                     </span>
 
@@ -51,7 +51,7 @@ PAIS(cve_pais, pais) -> CIUDAD (cve_ciudad, ciudad, cve_pais) -> DIRECCION (cve_
 
                 <div class="form-text">
                     <!-- if is set the property address -->
-                    <span class="text-secondary">
+                    <span class="text-secondary" v-if="old.direccion">
                         Anterior: {{ old.direccion }}
                     </span>
 
@@ -65,7 +65,7 @@ PAIS(cve_pais, pais) -> CIUDAD (cve_ciudad, ciudad, cve_pais) -> DIRECCION (cve_
 
                 <div class="form-text">
                     <!-- if is set the property address -->
-                    <span class="text-secondary">
+                    <span class="text-secondary" v-if="old.numero">
                         Anterior: {{ old.numero }}
                     </span>
                 </div>
@@ -80,7 +80,7 @@ PAIS(cve_pais, pais) -> CIUDAD (cve_ciudad, ciudad, cve_pais) -> DIRECCION (cve_
 
                 <div class="form-text">
                     <!-- if is set the property address -->
-                    <span class="text-secondary">
+                    <span class="text-secondary" v-if="old.codigo_postal">
                         Anterior: {{ old.codigo_postal }}
                     </span>
 
@@ -92,8 +92,13 @@ PAIS(cve_pais, pais) -> CIUDAD (cve_ciudad, ciudad, cve_pais) -> DIRECCION (cve_
 
 <script>
 export default {
+    name: "form-address",
     props: ['title', 'old_address'],
-
+    computed: {
+        old() {
+            return this.old_address ? JSON.parse(this.old_address) : {};
+        }
+    },
     data() {
         return {
             address: {
@@ -105,12 +110,10 @@ export default {
             },
             cities: [],
             countries: [],
-            old: ''
         }
     },
     mounted() {
         this.getCountries();
-        this.old = JSON.parse(this.old_address ?? '{}');
     },
     methods: {
         getCountries() {
