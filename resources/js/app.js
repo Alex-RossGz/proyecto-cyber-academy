@@ -13,6 +13,9 @@ import { createApp } from 'vue';
  * to use in your application's views. An example is included for you.
  */
 
+import IllestWaveform from "1llest-waveform-vue"
+import "1llest-waveform-vue/lib/style.css"
+
 const app = createApp({});
 const form = createApp({});
 
@@ -21,12 +24,20 @@ import cards from './components/cards.vue';
 import temario from './components/temario.vue';
 import address from './components/Address.vue';
 import PaymentOptions from './components/PaymentOptions.vue';
+import Experience from './components/Experience.vue';
+import Interes from './components/Interes.vue';
+import Phone from './components/Phone.vue';
+import Mail from './components/Mail.vue';
 
+app.use(IllestWaveform);
 app.component('cards', cards);
-
 form.component('temario', temario);
 form.component('vaddress' , address);
 form.component('payment-options', PaymentOptions);
+form.component('experience', Experience);
+form.component('interes', Interes);
+form.component('phone', Phone);
+form.component('mail', Mail);
 
 /**
  * The following block of code may be used to automatically register your

@@ -22,7 +22,7 @@
 @endphp
 
 <body class="antialiased">
-    <nav class="navbar fixed-top {{ Auth::user()->membership == 'premium' ? 'navbar-dark bg-dark' : 'navbar-light bg-light' }} shadow-sm">
+    <nav class="navbar fixed-top {{ !is_null(Auth::user()) && Auth::user()->membership == 'premium' ? 'navbar-dark bg-dark' : 'navbar-light bg-light' }} shadow-sm">
         <div class="container-fluid">
             <a class="navbar-brand {{ $disabled }}" href="{{ route('home') }}">
                 <img src="{{ asset('favicon.png') }}" alt="" width="30" height="24"
@@ -30,7 +30,7 @@
                 {{ config('app.name', 'Laravel') }}
             </a>
             {{-- premium badge --}}
-            @if (Auth::user()->membership == 'premium')
+            @if (Auth::user() && Auth::user()->membership == 'premium')
                 <span class="badge bg-info text-dark">Premium</span>
             @endif
 
@@ -39,7 +39,7 @@
                 aria-controls="offcanvasNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="offcanvas offcanvas-end {{ Auth::user()->membership == 'premium' ? 'bg-info' : 'bg-light' }}" tabindex="-1" id="offcanvasNavbar"
+            <div class="offcanvas offcanvas-end {{ Auth::user() && Auth::user()->membership == 'premium' ? 'bg-dark text-white' : 'bg-light' }}" tabindex="-1" id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
                     <div id="logo" class="text-center">
@@ -69,16 +69,13 @@
                                 @auth
                                     <h6 class="dropdown-header">Perfil de alumno</h6>
                                     <a class="dropdown-item" href="{{ route('subscribed') }}">Mis cursos inscritos</a>
-                                    <a class="dropdown-item disabled" href="#">Mi suscripción
-                                        <i>(Próximamente...)</i></a>
 
                                     <a href="{{ route('membership') }}" class="dropdown-item">
                                         <i class="fas fa-certificate"></i>
                                         Membresías</a>
                                     <hr class="dropdown-divider">
                                     <h6 class="dropdown-header">Perfil de profesor</h6>
-                                    <a class="dropdown-item disabled" href="#">Mis cursos <i>(Próximamente...)
-                                        </i></a>
+                                    <a class="dropdown-item" href="#">Perfil de profesor</a>
                                     <a class="dropdown-item" href="{{ route('proponer') }}"><i class="fa fa-upload"
                                             aria-hidden="true"></i> Proponer curso</a>
                                     <hr class="dropdown-divider">

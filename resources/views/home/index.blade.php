@@ -6,7 +6,7 @@
 @section('content')
     <div class="container-fluid">
         <h1 class="display-1">
-            <b>Bienvenido a </b><img src="{{ asset(($core_user->membership !== 'premium') ? 'img/logo.png' : 'img/logo-premium.png') }}" alt="Logo" class="img-fluid"
+            <b>Bienvenido a </b><img src="{{ asset((!is_null($core_user) && $core_user->membership == 'premium') ? 'img/logo-premium.png' : 'img/logo.png') }}" alt="Logo" class="img-fluid"
                 style="max-height: 100px;">{{ config('app.name') }}
 
         </h1>
@@ -19,9 +19,9 @@
                 {{ $user->apellido_materno }}
             </small>
             {{-- membership --}}
-            @if ($core_user->membership == 'premium')
+            @if (!is_null($core_user) && $core_user->membership == 'premium')
                 <span class="badge bg-info text-white">Premium</span>
-            @elseif ($core_user->membership == 'basica')
+            @elseif (!is_null($core_user) && $core_user->membership == 'basica')
                 <span class="badge bg-primary text-white">Básica</span>
             @else
                 <span class="badge bg-secondary text-white">Sin membresía</span>

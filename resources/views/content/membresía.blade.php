@@ -72,6 +72,7 @@
                                 <li>Acceso ilimitado a todos los cursos</li>
                                 <li>Plan de aprendizaje personalizado</li>
                                 <li>Acceso exclusivo a contenido premium</li>
+                                <li>Tema personalizado</li>
                             </ul>
                             @if ($user->membership == null || $user->membership == 'basica')
                                 <form action="{{ route('payment', ['membership' => 'premium']) }}" method="get">

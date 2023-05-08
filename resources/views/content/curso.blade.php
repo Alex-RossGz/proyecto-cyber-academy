@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <div class="{{$course->premium ? 'bg-info' : 'bg-primary'}} text-white mb-5 pb-1 pt-3 px-3">
+    <div class="{{ $course->premium ? 'bg-info' : 'bg-primary' }} text-white mb-5 pb-1 pt-3 px-3">
         {{-- Breadcrum --}}
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -22,7 +22,7 @@
             </p>
             {{-- if not subscribed --}}
             @unless ($subscribed)
-            <p class="mt-5">
+                <p class="mt-5">
                 <form action="{{ route('subscribe') }}" method="POST">
                     @csrf
                     <input type="hidden" name="course" value="{{ $course->_id }}">
@@ -32,10 +32,10 @@
                         Suscribirse
                     </button>
                 </form>
-            </p>
+                </p>
             @endunless
             <table class="table table-hover mt-5">
-                <thead class="{{$course->premium ? 'bg-info' : 'bg-primary'}} text-white">
+                <thead class="{{ $course->premium ? 'bg-info' : 'bg-primary' }} text-white">
                     <tr>
                         <th class="text-center">#</th>
                         <th>Temario</th>
@@ -58,8 +58,11 @@
                                     <input type="hidden" name="course" value="{{ $course->_id }}">
                                     <input type="hidden" name="tema" value="{{ $loop->iteration }}">
                                     <input type="hidden" name="aprendizaje" value="auditivo">
-                                    <button type="submit" class="btn btn-link p-0 @unless ($subscribed) disabled @endunless">
-                                        <i class="fa fa-volume-up" aria-hidden="true"></i>
+                                    <button type="submit"
+                                        class="btn btn-link p-0 @unless ($subscribed) disabled @endunless {{ $course->premium ? 'text-info' : '' }}">
+                                        <i class="fa
+                                        fa-volume-up"
+                                            aria-hidden="true"></i>
                                     </button>
                                 </form>
                             </td>
@@ -70,8 +73,11 @@
                                     <input type="hidden" name="course" value="{{ $course->_id }}">
                                     <input type="hidden" name="tema" value="{{ $loop->iteration }}">
                                     <input type="hidden" name="aprendizaje" value="escrito">
-                                    <button type="submit" class="btn btn-link p-0 @unless ($subscribed) disabled @endunless">
-                                        <i class="fa fa-file-pdf" aria-hidden="true"></i>
+                                    <button type="submit"
+                                        class="btn btn-link p-0 @unless ($subscribed) disabled @endunless {{ $course->premium ? 'text-info' : '' }}">
+                                        <i class="fa
+                                        fa-file-pdf"
+                                            aria-hidden="true"></i>
                                     </button>
                                 </form>
                             </td>
@@ -82,8 +88,11 @@
                                     <input type="hidden" name="course" value="{{ $course->_id }}">
                                     <input type="hidden" name="tema" value="{{ $loop->iteration }}">
                                     <input type="hidden" name="aprendizaje" value="visual">
-                                    <button type="submit" class="btn btn-link p-0 @unless ($subscribed) disabled @endunless">
-                                        <i class="fa fa-video-camera" aria-hidden="true"></i>
+                                    <button type="submit"
+                                        class="btn btn-link p-0 @unless ($subscribed) disabled @endunless {{ $course->premium ? 'text-info' : '' }}">
+                                        <i class="fa
+                                        fa-video-camera"
+                                            aria-hidden="true"></i>
                                     </button>
                                 </form>
                             </td>

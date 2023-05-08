@@ -17,6 +17,8 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
+        "1llest-waveform-vue": "^1.0.11",
+        "vee-validate": "^4.5.8",
         "vue-audio-better": "^3.0.1"
     }
 }

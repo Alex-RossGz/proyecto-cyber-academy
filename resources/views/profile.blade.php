@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
+            <div class="col-md-12">
+                <div class="card row">
                     <div class="card-header display-4 text-center my-5">
                         <i class="fa fa-edit" aria-hidden="true"></i>
                         Editar perfil
@@ -75,17 +75,21 @@
                                 <label for="genero" class="form-label">Género</label>
                                 <div class="d-flex justify-content-center">
                                     <div class="btn-group">
-                                        <input type="radio" class="btn-check" name="genero" {{ $user->genero == 'M' ? 'checked' : '' }} value="M" id="male">
+                                        <input type="radio" class="btn-check" name="genero"
+                                            {{ $user->genero == 'M' ? 'checked' : '' }} value="M" id="male">
                                         <label class="btn btn-outline-primary" for="male">
                                             <i class="fa fa-mars" aria-hidden="true"></i>
                                         </label>
 
-                                        <input type="radio" class="btn-check" name="genero" {{ $user->genero == 'F' ? 'checked' : '' }} value="F" id="female">
+                                        <input type="radio" class="btn-check" name="genero"
+                                            {{ $user->genero == 'F' ? 'checked' : '' }} value="F" id="female">
                                         <label class="btn btn-outline-primary" for="female">
                                             <i class="fa fa-venus" aria-hidden="true"></i>
                                         </label>
 
-                                        <input type="radio" class="btn-check" name="genero" {{ $user->genero != 'M' && $user->genero != 'F' ? 'checked' : '' }} value="" id="null">
+                                        <input type="radio" class="btn-check" name="genero"
+                                            {{ $user->genero != 'M' && $user->genero != 'F' ? 'checked' : '' }}
+                                            value="" id="null">
                                         <label class="btn btn-outline-primary" for="null">
                                             <i class="fa fa-times" aria-hidden="true"></i>
                                         </label>
@@ -114,14 +118,6 @@
                                 </ul>
                             </div>
 
-                            <div class="mb-3" id="address" >
-                                @if ($user->cve_direccion == 1)
-                                    <vaddress title="Registrar una"></vaddress>
-                                @else
-                                    <vaddress title="Editar tu" old_address='{!! json_encode($address) !!}'></vaddress>
-                                @endif
-                            </div>
-
                             <div class="mb-3 d-flex justify-content-center">
                                 <button type="submit" class="btn btn-primary text-white">
                                     Guardar cambios <i class="fa fa-floppy-o" aria-hidden="true"></i>
@@ -129,6 +125,55 @@
                             </div>
                         </form>
                     </div>
+                </div>
+                <div id="address">
+                    <div class="mb-3">
+                        @if ($user->cve_direccion == 1)
+                            <vaddress title="Registrar una"></vaddress>
+                        @else
+                            <vaddress title="Editar tu" old_address='{!! json_encode($address) !!}'></vaddress>
+                        @endif
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Guardar dirección
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card row mt-5">
+                        <div class="card-header display-4 text-center my-5">
+                            <i class="fa fa-gamepad mx-3" aria-hidden="true"></i>
+                            <small class="text-muted">Editar perfil de</small> intereses
+                        </div>
+                        <div class="card-body">
+                            <Interes _id="form-interes"></Interes>
+                        </div>
+                        <div class="d-flex justify-content-center card-footer">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i> Guardar intereses
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card row mt-5">
+                        <div class="card-header display-4 text-center my-5">
+                            <i class="fa fa-flag mx-3" aria-hidden="true"></i>
+                            <small class="text-muted">Editar perfil de</small> experiencia
+                        </div>
+                        <div class="card-body">
+                            <Experience _id="form-experiencia"></Experience>
+                        </div>
+                        <div class="d-flex justify-content-center card-footer">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i> Guardar experiencias
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <Phone _id="form-telefono"></Phone>
+                    <Mail _id="form-mail"></Mail>
                 </div>
             </div>
         </div>
