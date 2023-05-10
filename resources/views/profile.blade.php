@@ -10,6 +10,11 @@
                         Editar perfil
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <form method="POST" action="{{ url('perfil') }}">
                             {{ csrf_field() }}
 
@@ -100,6 +105,28 @@
                                         {{ $user->genero ?? 'Prefiero no decirlo' }}</span>
                                 </div>
                             </div>
+                            <div class="mb-3 {{ $errors->has('grado_escolar') ? 'has-error' : '' }}">
+                                <label for="grado_escolar" class="form-label">Grado escolar</label>
+                                <select id="grado_escolar" name="grado_escolar" class="form-control">
+                                    <option value="">Seleccione un grado escolar</option>
+                                    @foreach ($grados_escolares as $grado_escolar)
+                                        <option value="{{ $grado_escolar->cve_grado_escolar }}"
+                                            {{ $core_user->alumno->cve_grado_escolar == $grado_escolar->cve_grado_escolar ? 'selected' : '' }}>
+                                            {{ $grado_escolar->grado }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('grado_escolar'))
+                                    <span class="help-block text-danger">
+                                        <strong>{{ $errors->first('grado_escolar') }}</strong>
+                                    </span>
+                                @endif
+
+                                <div class="form-text">
+                                    <span id="grado_escolarHelp" class="form-text text-muted">Anterior:
+                                        {{ $core_user->alumno->grado_escolar->grado ?? 'N/A' }}</span>
+                                </div>
+                            </div>
+
 
                             <div class="mb-3">
                                 <p><strong>Nota:</strong> Los siguientes campos no se pueden modificar.</p>
@@ -129,16 +156,10 @@
                 <div id="address">
                     <div class="mb-3">
                         @if ($user->cve_direccion == 1)
-                            <vaddress title="Registrar una"></vaddress>
+                            <address-form title="Registrar una"></address-form>
                         @else
-                            <vaddress title="Editar tu" old_address='{!! json_encode($address) !!}'></vaddress>
+                            <address-form title="Editar tu" old_address='{!! json_encode($address) !!}'></address-form>
                         @endif
-
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i> Guardar dirección
-                            </button>
-                        </div>
                     </div>
                     <div class="card row mt-5">
                         <div class="card-header display-4 text-center my-5">
@@ -148,13 +169,6 @@
                         <div class="card-body">
                             <Interes _id="form-interes"></Interes>
                         </div>
-                        <div class="d-flex justify-content-center card-footer">
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-save"></i> Guardar intereses
-                                </button>
-                            </div>
-                        </div>
                     </div>
                     <div class="card row mt-5">
                         <div class="card-header display-4 text-center my-5">
@@ -163,13 +177,6 @@
                         </div>
                         <div class="card-body">
                             <Experience _id="form-experiencia"></Experience>
-                        </div>
-                        <div class="d-flex justify-content-center card-footer">
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-save"></i> Guardar experiencias
-                                </button>
-                            </div>
                         </div>
                     </div>
                     <Phone _id="form-telefono"></Phone>

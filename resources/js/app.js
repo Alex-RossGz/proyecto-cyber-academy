@@ -32,7 +32,7 @@ import Mail from './components/Mail.vue';
 app.use(IllestWaveform);
 app.component('cards', cards);
 form.component('temario', temario);
-form.component('vaddress' , address);
+form.component('AddressForm' , address);
 form.component('payment-options', PaymentOptions);
 form.component('experience', Experience);
 form.component('interes', Interes);

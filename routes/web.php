@@ -4,6 +4,7 @@ use App\Http\Controllers\CursoController;
 
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
 use App\Models\CourseMongo;
 use App\Models\Curso;
 use Illuminate\Support\Facades\Route;
@@ -50,7 +51,17 @@ Route::post('/proponer', [CursoController::class, 'post_course'])->name('propone
 
 Route::get('/perfil', [PageController::class, 'profile'])->name('profile');
 
-Route::post('/perfil', [PageController::class, 'update_profile'])->name('profile');
+Route::post('/perfil', [ProfileController::class, 'update'])->name('profile');
+
+Route::patch('/update/address', [ProfileController::class, 'updateAddress'])->name('update.address');
+Route::patch('/update/interes', [ProfileController::class, 'updateIntereses'])->name('update.interes');
+Route::get('/get/interes', [ProfileController::class, 'getIntereses'])->name('get.interes');
+Route::patch('/update/experiencia', [ProfileController::class, 'updateExperiencia'])->name('update.experiencia');
+Route::get('/get/experiencia', [ProfileController::class, 'getExperiencia'])->name('get.experiencia');
+Route::patch('/update/telefono', [ProfileController::class, 'updateTelefono'])->name('update.telefono');
+Route::get('/get/telefono', [ProfileController::class, 'getTelefono'])->name('get.telefono');
+Route::patch('/update/correo', [ProfileController::class, 'updateCorreo'])->name('update.correo');
+Route::get('/get/correo', [ProfileController::class, 'getCorreo'])->name('get.correo');
 
 Route::get('/membresía', [PageController::class, 'membership'])->name('membership');
 

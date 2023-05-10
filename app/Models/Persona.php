@@ -29,4 +29,13 @@ class Persona extends Model
     {
         return $this->belongsTo(Direccion::class, 'cve_direccion');
     }
+    public function telefono()
+    {
+        return $this->hasMany(Telefono::class, 'cve_persona');
+    }
+
+    public function correo()
+    {
+        return $this->hasMany(Correo::class, 'cve_persona');
+    }
 }

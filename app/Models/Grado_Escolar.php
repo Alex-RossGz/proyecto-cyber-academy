@@ -12,4 +12,9 @@ class Grado_Escolar extends Model
     protected $table = 'grado_escolar';
 
     protected $primaryKey = 'cve_grado_escolar';
+
+    public function alumnos()
+    {
+        return $this->hasMany(Alumno::class, 'cve_grado_escolar');
+    }
 }
