@@ -80,7 +80,7 @@ class RegisterController extends Controller
                 'apellido_materno' => $data['lastname2'],
                 'genero' => $data['genero'],
                 'fecha_nacimiento' => $data['birthdate'],
-                'cve_direccion' => 1,
+                'cve_direccion' => null,
             ]);
 
             $persona->save();

@@ -112,7 +112,14 @@ export default {
     props: ['title', 'old_address'],
     computed: {
         old() {
-            return this.old_address ? JSON.parse(this.old_address) : {};
+            return this.old_address ? JSON.parse(this.old_address) : {
+                'cve_pais': '',
+                'pais': '',
+                'cve_ciudad': '',
+                'direccion': '',
+                'numero': '',
+                'codigo_postal': ''
+            };
         }
     },
     data() {

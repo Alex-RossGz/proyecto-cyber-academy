@@ -155,7 +155,7 @@
                 </div>
                 <div id="address">
                     <div class="mb-3">
-                        @if ($user->cve_direccion == 1)
+                        @if ($user->cve_direccion == null)
                             <address-form title="Registrar una"></address-form>
                         @else
                             <address-form title="Editar tu" old_address='{!! json_encode($address) !!}'></address-form>

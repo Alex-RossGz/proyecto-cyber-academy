@@ -29,8 +29,8 @@ class PageController extends Controller
         $many_courses = CourseMongo::all()->count() > $this->max_courses;
         $courses = $many_courses
             ? CourseMongo::all()
-                ->shuffle()
-                ->random(3)
+            ->shuffle()
+            ->random(3)
             : CourseMongo::all();
 
         foreach ($courses as $course) {
@@ -62,19 +62,22 @@ class PageController extends Controller
 
         // Get address, city, and country using Eloquent relationships
         $direccion = Direccion::find($persona->cve_direccion);
-        $ciudad = Ciudad::find($direccion->cve_ciudad);
-        $pais = Pais::find($ciudad->cve_pais);
+        if ($direccion) {
+            $ciudad = Ciudad::find($direccion->cve_ciudad);
+            $pais = Pais::find($ciudad->cve_pais);
 
-        // Fill address with the required details
-        $address = [
-            'codigo_postal' => $direccion->codigo_postal,
-            'numero' => $direccion->numero,
-            'direccion' => $direccion->direccion,
-            'ciudad' => $ciudad->ciudad,
-            'pais' => $pais->pais,
-            'cve_pais' => $pais->cve_pais,
-            'cve_ciudad' => $ciudad->cve_ciudad,
-        ];
+            // Fill address with the required details
+            $address = [
+                'codigo_postal' => $direccion->codigo_postal,
+                'numero' => $direccion->numero,
+                'direccion' => $direccion->direccion,
+                'ciudad' => $ciudad->ciudad,
+                'pais' => $pais->pais,
+                'cve_pais' => $pais->cve_pais,
+                'cve_ciudad' => $ciudad->cve_ciudad,
+            ];
+        }
+        $address = $address ?? null;
 
         $grados_escolares = Grado_Escolar::all();
 
@@ -106,24 +109,24 @@ class PageController extends Controller
         return view('content.membresía');
     }
 
-    public function payment(Request $request) {
+    public function payment(Request $request)
+    {
         $membership = $request->membership;
-        if(Auth::guest()) {
+        if (Auth::guest()) {
             return redirect()->route('login');
-        }
-        else if(!in_array($membership, ['basica', 'premium'])) {
+        } else if (!in_array($membership, ['basica', 'premium'])) {
             return redirect()->route('membership');
         }
 
         return view('content.payment', compact('membership'));
     }
 
-    public function proceed_payment(Request $request) {
+    public function proceed_payment(Request $request)
+    {
         $membership = $request->membership;
-        if(Auth::guest()) {
+        if (Auth::guest()) {
             return redirect()->route('login');
-        }
-        else if(!in_array($membership, ['basica', 'premium'])) {
+        } else if (!in_array($membership, ['basica', 'premium'])) {
             return redirect()->route('membership');
         }
 

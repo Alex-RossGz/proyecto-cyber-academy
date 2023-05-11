@@ -25,7 +25,7 @@ export default defineConfig({
             vue: 'vue/dist/vue.esm-bundler.js',
         },
     },
-    // server: {
-    //     host: '200.13.89.75'
-    // },
+    server: {
+        host: '200.13.89.75'
+    },
 });

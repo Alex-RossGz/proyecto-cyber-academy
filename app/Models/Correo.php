@@ -22,8 +22,6 @@ class Correo extends Model
         'dominio',
     ];
 
-    public $timestamps = false;
-
     public function persona()
     {
         return $this->belongsTo(Persona::class, 'cve_persona');
