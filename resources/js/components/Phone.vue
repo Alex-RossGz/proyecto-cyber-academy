@@ -9,6 +9,18 @@
                         </h4>
                     </div>
                     <div class="card-body">
+                        <div v-if="success" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>¡Éxito!</strong> {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div v-if="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>¡Error!</strong> {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
                         <form @submit.prevent="submitForm">
                             <div v-for="(phone, index) in phones" :key="index" class="mb-4">
                                 <div class="form-group">
@@ -44,10 +56,15 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
             phones: [''],
+            success: false,
+            error: false,
+            message: '',
         };
     },
     methods: {
@@ -57,7 +74,7 @@ export default {
         removePhone(index) {
             this.phones.splice(index, 1);
         },
-        submitForm() {
+        async submitForm() {
             console.log('Números telefónicos:', this.phones);
             // if one of the phones is invalid, the form won't be submitted
             if (this.phones.some((phone) => !this.isValidPhone(phone))) {
@@ -65,6 +82,22 @@ export default {
                 return;
             }
             console.log('Formulario válido');
+
+            const response = await axios.patch('update/telefono', {
+                phones: this.phones,
+            });
+
+            console.log('Response telefono:', response);
+
+            this.success = response.data.success;
+            this.error = response.data.error;
+            this.message = response.data.message;
+
+            setTimeout(() => {
+                this.success = false;
+                this.error = false;
+                this.message = '';
+            }, 5000);
         },
         isValidPhone(phone) {
             const phoneRegex = /^(\d{2,3})[-\s]?(\d{7,8})$/;
@@ -77,6 +110,14 @@ export default {
                 console.log('Número telefónico válido');
             }
         },
+
+    },
+    mounted() {
+        axios.get('/get/telefono').then((response) => {
+            console.log('Telefonos:', this.phones);
+            this.phones = response.data.telefono.map((phone) => phone.telefono);
+        });
+
     },
 };
 </script>

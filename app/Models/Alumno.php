@@ -32,4 +32,10 @@ class Alumno extends Model
     {
         return $this->belongsTo(Grado_Escolar::class, 'cve_grado_escolar');
     }
+
+    public function intereses()
+    {
+        // select * from interes where cve_alumno = $this->cve_alumno
+        return $this->hasMany(Interes::class, 'cve_alumno', 'cve_alumno');
+    }
 }

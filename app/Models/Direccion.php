@@ -12,6 +12,13 @@ class Direccion extends Model
     protected $table = 'direccion';
     protected $primaryKey = 'cve_direccion';
 
+    public $fillable = [
+        'cve_ciudad',
+        'direccion',
+        'numero',
+        'codigo_postal',
+    ];
+
     public function persona()
     {
         return $this->hasOne(Persona::class, 'cve_direccion');

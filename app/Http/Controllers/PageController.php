@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CourseMongo;
+use App\Models\Grado_Escolar;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -71,13 +72,17 @@ class PageController extends Controller
             'direccion' => $direccion->direccion,
             'ciudad' => $ciudad->ciudad,
             'pais' => $pais->pais,
+            'cve_pais' => $pais->cve_pais,
+            'cve_ciudad' => $ciudad->cve_ciudad,
         ];
+
+        $grados_escolares = Grado_Escolar::all();
 
         # merge user and person data
         $core_user = $user;
         $user = $persona;
 
-        $data = compact('user', 'address', 'core_user');
+        $data = compact('user', 'address', 'core_user', 'grados_escolares');
 
         return view('profile', $data);
     }

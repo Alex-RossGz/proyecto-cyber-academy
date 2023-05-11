@@ -13,6 +13,8 @@ class Correo extends Model
 
     protected $primaryKey = 'cve_correo';
 
+    public $timestamps = false;
+
     # fillable fields
     protected $fillable = [
         'cve_persona',

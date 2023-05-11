@@ -26,4 +26,9 @@ class Profesor extends Model
         # Usuario::class is 'id', Profesor::class is 'cve_usuario'
         return $this->belongsTo(Usuario::class, 'id', 'cve_usuario');
     }
+
+    public function experiencia()
+    {
+        return $this->hasMany(Experiencia::class, 'cve_profesor', 'cve_profesor');
+    }
 }
