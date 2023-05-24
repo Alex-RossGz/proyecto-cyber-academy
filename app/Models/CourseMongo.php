@@ -9,6 +9,7 @@ class CourseMongo extends Model
 
     protected $connection = 'mongodb';
     protected $collection = 'media';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'id',
         'cve_curso',
@@ -19,7 +20,8 @@ class CourseMongo extends Model
         'version',
         'subscribers',
         'available',
-        'premium'
+        'premium',
+        'recommended_courses', // Add this line
     ];
 
     # index
@@ -35,8 +37,6 @@ class CourseMongo extends Model
         return view('content.curso', $data);
     }
 
-    // Add this method to your Course model
-    protected $appends = ['author_full_name'];
 
     public function getAuthorFullNameAttribute()
     {
@@ -49,6 +49,23 @@ class CourseMongo extends Model
     public function cursoOracle()
     {
         return $this->belongsTo(Curso::class, 'cve_curso', 'cve_curso');
+    }
+    public function getRecommendedCoursesAttribute()
+    {
+        $recommended_courses = [];
+        if (!$this->recommended_courses) {
+            return $recommended_courses;
+        }
+
+        // Loop through the recommended course IDs and get the details of each course
+        foreach ($this->recommended_courses as $course_id) {
+            $course = CourseMongo::find($course_id);
+            if ($course) {
+                $recommended_courses[] = $course;
+            }
+        }
+
+        return $recommended_courses;
     }
 
 }

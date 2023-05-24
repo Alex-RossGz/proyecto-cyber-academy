@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Termwind\Components\Dd;
+use Illuminate\Database\QueryException;
 use App\Models\Direccion;
 use App\Models\Ciudad;
 use App\Models\Pais;
@@ -22,6 +23,7 @@ class PageController extends Controller
 
     public function index()
     {
+
         //dd(asset('curso/curso1.jpg'));
         $id = Auth::check() ? Auth::user()->id : 0;
 
@@ -106,31 +108,31 @@ class PageController extends Controller
         return view('content.membresía');
     }
 
-    public function payment(Request $request) {
+    public function payment(Request $request)
+    {
         $membership = $request->membership;
-        if(Auth::guest()) {
+        if (Auth::guest()) {
             return redirect()->route('login');
-        }
-        else if(!in_array($membership, ['basica', 'premium'])) {
+        } else if (!in_array($membership, ['basica', 'premium'])) {
             return redirect()->route('membership');
         }
 
         return view('content.payment', compact('membership'));
     }
 
-    public function proceed_payment(Request $request) {
+    public function proceed_payment(Request $request)
+    {
         $membership = $request->membership;
-        if(Auth::guest()) {
+        if (Auth::guest()) {
             return redirect()->route('login');
-        }
-        else if(!in_array($membership, ['basica', 'premium'])) {
+        } else if (!in_array($membership, ['basica', 'premium'])) {
             return redirect()->route('membership');
         }
 
         $paymentMethods = [
             'paypal' => ['logo' => asset('logos/paypal.png'), 'method' => 'paypal'],
             'stripe' => ['logo' => asset('logos/stripe.png'), 'method' => 'stripe'],
-            'cash'   => ['logo' => asset('logos/cash.webp'), 'method' => 'cash'],
+            'cash' => ['logo' => asset('logos/cash.webp'), 'method' => 'cash'],
         ];
 
         $payment = $paymentMethods[$request->payment_method] ?? null;
