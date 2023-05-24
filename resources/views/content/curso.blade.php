@@ -115,5 +115,29 @@
                 height: 300px; width: 100%;">
             </div>
         </aside>
+        <div class="mt-5">
+            <h3>Cursos recomendados</h3>
+            <div class="row">
+                @forelse ($course->recommended_courses as $recommendedCourse)
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $recommendedCourse->title }}</h5>
+                                <p class="card-text">{{ Str::limit($recommendedCourse->description, 100) }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="{{ route('course.show', $recommendedCourse->id) }}"
+                                            class="btn btn-sm btn-outline-secondary">View</a>
+                                    </div>
+                                    <small class="text-muted">{{ $recommendedCourse->version }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <p>No hay cursos recomendados</p>
+                @endforelse
+            </div>
+        </div>
     </div>
 @endsection('content')
