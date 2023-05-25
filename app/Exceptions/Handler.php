@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
             return response()->view('content.errorOracle', [], 500);
         }
         // else MongoException
-        else if ($exception instanceof MongoException or $exception instanceof InvalidArgumentException) {
+        else if ($exception instanceof MongoException) {
             return response()->view('content.errorMongo', [], 500);
         }
         else if ($exception instanceof \Exception) {

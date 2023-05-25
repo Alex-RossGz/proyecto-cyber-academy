@@ -50,16 +50,17 @@ class CourseMongo extends Model
     {
         return $this->belongsTo(Curso::class, 'cve_curso', 'cve_curso');
     }
-    public function getRecommendedCoursesAttribute()
+    public function getCursosRecomendadosAttribute()
     {
         $recommended_courses = [];
         if (!$this->recommended_courses) {
             return $recommended_courses;
         }
-
+        
         // Loop through the recommended course IDs and get the details of each course
         foreach ($this->recommended_courses as $course_id) {
-            $course = CourseMongo::find($course_id);
+            // the id is _id in the mongo collection, but this is the course id in the oracle db
+            $course = CourseMongo::where('id', $course_id)->first();
             if ($course) {
                 $recommended_courses[] = $course;
             }
