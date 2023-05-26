@@ -70,3 +70,6 @@ Route::get('/pago/{membership}', [PageController::class, 'payment'])->name('paym
 Route::get('/pago/{membership}/{payment_method}', [PageController::class, 'proceed_payment'])->name('proceed');
 
 Route::put('/pago/{membership}/{payment_method}', [MembershipController::class, 'update_membership'])->name('update_membership');
+
+Route::get('orm/{model}', 'App\Http\Controllers\ORMController@show');
+
