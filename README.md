@@ -1,3 +1,4 @@
+![Favicon](public/favicon.png)
 # Cyber Academy
 
 Bienvenido al repositorio de Cyber Academy, una revolucionaria plataforma de aprendizaje en línea. Esta aplicación está desarrollada utilizando Laravel, Vue.js y Oracle DB.
@@ -16,7 +17,10 @@ Bienvenido al repositorio de Cyber Academy, una revolucionaria plataforma de apr
 - Vue.js
 - Oracle DB
 - MongoDB
+### Testeo
 - Stripe
+- PayPal
+- Cashier
 
 ## Instalación
 
@@ -38,8 +42,6 @@ Bienvenido al repositorio de Cyber Academy, una revolucionaria plataforma de apr
 8. Compilar los assets: `npm run dev`
 9. Arrancar el servidor de desarrollo: `php artisan serve`
 
-## Favicon
-El favicon se encuentra en la ruta `public/favicon.png`
 
 ## Contribuciones
 Las contribuciones son bienvenidas. Por favor, abre un issue o realiza un pull request.
